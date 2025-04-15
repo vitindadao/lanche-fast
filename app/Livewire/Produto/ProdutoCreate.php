@@ -5,7 +5,6 @@ namespace App\Livewire\Produto;
 use Livewire\Component;
 use App\Models\Produto;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 
 class ProdutoCreate extends Component
 {
@@ -47,7 +46,12 @@ class ProdutoCreate extends Component
         session()->flash('message', 'Produto criado com sucesso.');
 
         $this->resetInputFields();
-        $this->emit('produtoCreated'); // To notify parent or other components if needed
+
+        // Livewire 3 usa 'dispatch' no lugar de 'emit'
+        $this->dispatch('produtoCreated');
+
+        // Redirecionamento usando Livewire 3
+        return redirect()->route('produtos.index');
     }
 
     public function resetInputFields()
